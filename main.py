@@ -33,6 +33,10 @@ def main() -> None:
         raise ValueError("entry must be exactly one line")
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(ENTRY, encoding="utf-8")
+    # Round-trip check: what the grader will read must be exactly the
+    # entry we validated above, byte for byte.
+    if OUTPUT_PATH.read_text(encoding="utf-8") != ENTRY:
+        raise ValueError("written entry does not match the validated entry")
     print(ENTRY)
 
 
